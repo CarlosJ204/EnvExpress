@@ -78,3 +78,35 @@ h1, h2, h3, h4, h5, h6 {
 .text-white {
   color: #fff !important;
 }
+
+/* === Estilo PasarEx para el modal === */
+#miModal .modal-content {
+  border-radius: 1rem;              /* = rounded-4 */
+  overflow: hidden;
+}
+#miModal .modal-header {
+  border-bottom: none;
+}
+#miModal .modal-footer {
+  border-top: none;
+}
+
+/* Degradado azul tipo hero */
+.gradient-pasarex {
+  background: linear-gradient(135deg, #2b6aa5 0%, #1e3a66 100%);
+  color: #fff;
+}
+
+/* Inputs con aire y foco agradable */
+#miModal .form-control {
+  border-radius: .75rem;
+  padding: .6rem .9rem;
+}
+#miModal .form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
+/* Backdrop más suave y con blur */
+.modal-backdrop.show { opacity: .35; }
+.modal-backdrop { backdrop-filter: blur(2px); }

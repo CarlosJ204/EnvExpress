@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,13 +11,15 @@
 
   <link href="/blockchain/css/style.css" rel="stylesheet" />
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
 
     <div class="container">
 
       <a class="navbar-brand" href="/blockchain/index.html">PasarEx Colombia</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -24,7 +27,8 @@
         <ul class="navbar-nav ms-auto">
 
           <li class="nav-item"><a class="nav-link" href="/blockchain/views/registrar.html">Registrar envío</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blockchain/views/actualizar.html">Actualización del estado</a></li>
+          <li class="nav-item"><a class="nav-link" href="/blockchain/views/actualizar.html">Actualización del estado</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="/blockchain/views/verificar.html">Verificar envío</a></li>
         </ul>
       </div>
@@ -36,18 +40,24 @@
     <div class="container">
       <h1>Eficiencia y confiabilidad en cada envío con PasarEx</h1>
       <p>Ingresa el número de guía para rastrear tu envío en tiempo real.</p>
-      <form class="row justify-content-center mt-4">
+      <form class="row justify-content-center mt-4" id="form-tracking">
         <div class="col-md-4 col-sm-6 mb-3">
-          <input type="text" class="form-control" placeholder="Número de guía" />
+          <input type="text" class="form-control" placeholder="Número de guía" id="guide-code" />
         </div>
         <div class="col-auto mb-3">
           <button type="submit" class="btn btn-primary">Rastrear envío</button>
         </div>
       </form>
+
+      <div id="modal-slot"></div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="/js/block.js" defer></script>
+
     </div>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -84,7 +84,31 @@ if (formRegistro) {
     formRegistro.reset();
   });
 }
+//------------------ Mostrar las Actualizaciones en el Modal -----------------
+document.addEventListener("DOMContentLoaded", () => {
+  const modalForm = document.getElementById("modal-form");
+  const form = document.getElementById("form-tracking");
+  const guideCode = document.getElementById("guide-code");
 
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const hash = guideCode.value.trim();
+    const block = naniCoin.chain.find((b) => b.hash === hash);
+    if(!block){
+      alert("❌ No se encontró un envío con ese codigo de guia.");
+      return;
+        }
+    });
+
+    const data = block.data || {};
+    modalForm.document.getElementById("modal-guide-code").value = block.hash;
+    modalForm.document.getElementById("modal-state").value = data.envio ? data.envio.estado : "N/A";
+    modalForm.document.getElementById("modal-current-city").value = data.envio ? data.envio.ciudadActual : "N/A";
+
+    modal.show();
+
+
+});
 // ----------------- Actualización de estado -----------------
 const formActualizar = document.getElementById("form-update");
 console.log("antes del if");

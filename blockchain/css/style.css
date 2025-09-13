@@ -11,22 +11,24 @@ body {
 /* Sección principal con imagen de fondo al estilo PasarEx */
 .hero {
   background: linear-gradient(rgba(0, 78, 146, 0.75), rgba(0, 4, 40, 0.85)),
-    url('../assets/images/inicio.jpg') center/cover no-repeat;
-  min-height: 80vh;
+    url('/blockchain/img/Gemini_Generated_Image_bqx5bqbqx5bqbqx5.png') center/cover no-repeat;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
 
+
 .hero h1 {
   color: #fff;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 3rem;
 }
 
 .hero p {
   color: #f0f4fa;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 
@@ -53,17 +55,30 @@ body {
 }
 
 .navbar-brand {
-  font-weight: 600;
+  font-weight: 800;
   color: #004e92 !important;
 }
 
 .navbar-light .navbar-nav .nav-link {
+  font-weight: 600;
   color: #004e92;
+}
+.nav-link:hover {
+  background-color: #e6e6e6;
+  border-radius: 10px;
 }
 
 .btn-primary {
   background-color: #004e92;
   border-color: #004e92;
+}
+.btn-rastear {
+  background-color: #ec4e05;
+  color: #fff;
+}
+.btn-rastear:hover {
+  background-color: #b33a04;
+  color: #fff;
 }
 
 .btn-primary:hover {

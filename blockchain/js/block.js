@@ -2,7 +2,7 @@
 class Block {
   constructor(index, data, previousHash = "") {
     this.index = index;
-    this.date = new Date().toISOString();
+    this.date = new Date();
     this.data = data;
     this.previousHash = previousHash;
     this.hash = this.createHash();
@@ -41,8 +41,8 @@ class BlockChain {
       const parsed = JSON.parse(stored);
       this.chain = parsed.map((b) => {
         const block = new Block(b.index, b.data, b.previousHash);
-        block.date = b.date; // restaurar fecha original
-        block.hash = b.hash; // restaurar hash original
+        block.date = b.date; 
+        block.hash = b.hash; 
         return block;
       });
     }
@@ -71,14 +71,14 @@ if (formRegistro) {
     };
 
     const historial = new BlockChain({
-      estado: "Creado",
+      estado: "En ciudad de origen",
       ciudadActual: envio.origen,
     });
 
     const nuevo = naniCoin.addBlock({ envio, historial: historial.chain });
 
-    console.log("📦 Nuevo envío registrado:", nuevo);
-    console.log("📜 Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
+    console.log("Nuevo envío registrado:", nuevo);
+    console.log("Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
     alert(`✅ Envío registrado. Hash: ${nuevo.hash.slice(0, 16)}...`);
 
     formRegistro.reset();
@@ -87,9 +87,7 @@ if (formRegistro) {
 
 // ----------------- Actualización de estado -----------------
 const formActualizar = document.getElementById("form-update");
-console.log("antes del if");
 if (formActualizar) {
-  console.log("entro en el if");
   formActualizar.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -118,11 +116,60 @@ if (formActualizar) {
     naniCoin.saveToStorage();
 
 
-    console.log("🔄 Estado actualizado:", nuevo);
-    console.log("📜 Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
+    console.log("Estado actualizado:", nuevo);
+    console.log("Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
 
     alert(`✅ Estado actualizado. Nuevo hash: ${nuevo.hash.slice(0, 16)}...`);
     formActualizar.reset();
 
+  });
+}
+
+// ----------------- Verificación de envío -----------------
+const formVerificar = document.getElementById("form-verification");
+if (formVerificar) {
+  formVerificar.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const hashBase = document.getElementById("hashBase").value.trim();
+    const estadoPaquete = document.getElementById("package-state").value.trim();
+
+    // Buscar el bloque original por hash
+    const bloqueBase = naniCoin.chain.find((b) => b.hash === hashBase);
+    if (!bloqueBase) {
+      alert("❌ No se encontró un envío con ese hash.");
+      return;
+    }
+
+    const historial = new BlockChain({
+      estado: "Genesis",
+      ciudadActual: "Inicio",
+    });
+
+    historial.chain = bloqueBase.data.historial.map((b) => {
+      const block = new Block(b.index, b.data, b.previousHash);
+      block.date = b.date;
+      block.hash = b.hash;
+      return block;
+    });
+
+
+    const valorPago = bloqueBase.data.envio.valor;
+
+    const nuevoHistorial = historial.addBlock({
+      estado:"Recibido",
+      estadoPaquete,
+      valorPago,
+      verificadoEn: new Date().toISOString(),
+    });
+
+    bloqueBase.data.historial = historial.chain;
+    naniCoin.saveToStorage();
+
+    console.log("Nueva verificación añadida:", nuevoHistorial);
+    console.log("Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
+
+    alert(`✅ Verificación añadida. Nuevo hash: ${nuevoHistorial.hash.slice(0, 16)}...`);
+    formVerificar.reset();
   });
 }

@@ -15,7 +15,7 @@
 
     <div class="container">
 
-      <a class="navbar-brand" href="/blockchain/index.html">PasarEx Colombia</a>
+      <a class="navbar-brand" href="/blockchain/index.html">ENVEXPRESS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,7 +25,7 @@
 
           <li class="nav-item"><a class="nav-link" href="/blockchain/views/registrar.html">Registrar envío</a></li>
           <li class="nav-item"><a class="nav-link" href="/blockchain/views/actualizar.html">Actualización del estado</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blockchain/views/verificar.html">Verificar envío</a></li>i>
+          <li class="nav-item"><a class="nav-link" href="/blockchain/views/verificar.html">Verificar envío</a></li>
         </ul>
       </div>
     </div>
@@ -36,14 +36,14 @@
         <div class="col-lg-8">
           <div class="form-container">
             <h1>Verificar envío</h1>
-            <form>
+            <form id="form-verification">
               <div class="mb-3">
-                <label for="valor-pagado" class="form-label">Valor pagado</label>
-                <input type="number" class="form-control" id="valor-pagado" required />
+                <label for="hashBase" class="form-label">Hash</label>
+                <input type="text" class="form-control" id="hashBase" required />
               </div>
               <div class="mb-3">
-                <label for="estado-paquete" class="form-label">Estado del paquete</label>
-                <input type="text" class="form-control" id="estado-paquete" required />
+                <label for="package-state" class="form-label">Estado del paquete</label>
+                <input type="text" class="form-control" id="package-state" required />
               </div>
               <button type="submit" class="btn btn-primary">Verificar</button>
             </form>

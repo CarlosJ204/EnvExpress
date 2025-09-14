@@ -1,41 +1,30 @@
-<link rel="stylesheet" href="/blockchain/css/style.css">
-<div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true" aria-labelledby="miModalLabel">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content shadow-lg border-0 rounded-4">
-      <!-- Header con degradado azul -->
-      <div class="modal-header gradient-pasarex text-white border-0 rounded-top-4 px-4 py-3">
-        <h5 id="miModalLabel" class="modal-title fw-semibold">Detalle del envío</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
 
-      <div class="modal-body p-4">
-        <form id="modal-form" class="row g-3">
-          <div class="col-md-6">
-            <label for="modal-guide-code" class="form-label">N.º de guía</label>
-            <input type="text" id="modal-guide-code" name="guideCode" class="form-control" placeholder="PX-12345678">
-          </div>
-
-          <div class="col-md-6">
-            <label for="modal-state" class="form-label">Estado</label>
-            <input type="text" id="modal-state" name="state" class="form-control" placeholder="En tránsito">
-          </div>
-
-          <div class="col-12">
-            <label for="modal-current-city" class="form-label">Ciudad actual</label>
-            <input type="text" id="modal-current-city" name="currentCity" class="form-control" placeholder="Barranquilla">
-          </div>
-
-          <!-- meta info opcional -->
-          <div class="col-12">
-            <small class="text-muted">Última actualización: <span id="modal-last-update">—</span></small>
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer border-0 px-4 pb-4">
-        <button class="btn btn-outline-secondary" data-bs-dismiss="modal" type="button">Cerrar</button>
-        <button class="btn btn-primary" id="modal-accept" type="button">Aceptar</button>
+  <div class="modal fade" id="datosModal" tabindex="-1" aria-labelledby="datosModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="datosModalLabel">Datos de Envío</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body form-container">
+          <form id="modal-form">
+            <div class="mb-3">
+              <label for="hash" class="form-label">Hash</label>
+              <input type="text" class="form-control" id="hash" disabled="true"/>
+            </div>
+            <div class="mb-3">
+              <label for="estado" class="form-label">Estado</label>
+              <input type="text" class="form-control" id="estado" disabled="true"/>
+            </div>
+            <div class="mb-3">
+              <label for="ciudad" class="form-label">Ciudad Actual</label>
+              <input type="text" class="form-control" id="ciudad" disabled="true"/>
+            </div>
+          </form>
+        </div>
+ 
       </div>
     </div>
   </div>
-</div>
+
+ 

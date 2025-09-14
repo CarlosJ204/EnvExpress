@@ -85,30 +85,7 @@ if (formRegistro) {
   });
 }
 //------------------ Mostrar las Actualizaciones en el Modal -----------------
-document.addEventListener("DOMContentLoaded", () => {
-  const modalForm = document.getElementById("modal-form");
-  const form = document.getElementById("form-tracking");
-  const guideCode = document.getElementById("guide-code");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const hash = guideCode.value.trim();
-    const block = naniCoin.chain.find((b) => b.hash === hash);
-    if(!block){
-      alert("❌ No se encontró un envío con ese codigo de guia.");
-      return;
-        }
-    });
-
-    const data = block.data || {};
-    modalForm.document.getElementById("modal-guide-code").value = block.hash;
-    modalForm.document.getElementById("modal-state").value = data.envio ? data.envio.estado : "N/A";
-    modalForm.document.getElementById("modal-current-city").value = data.envio ? data.envio.ciudadActual : "N/A";
-
-    modal.show();
-
-
-});
 // ----------------- Actualización de estado -----------------
 const formActualizar = document.getElementById("form-update");
 if (formActualizar) {
@@ -191,9 +168,77 @@ if (formVerificar) {
     naniCoin.saveToStorage();
 
     console.log("Nueva verificación añadida:", nuevoHistorial);
-    console.log("Cadena completa:", JSON.stringify(naniCoin.chain, null, 2));
+    console.log("Cadena completa:", JSON.stringify(naniCoin.chain, null, naniCoin.chain.length-1));
 
     alert(`✅ Verificación añadida. Nuevo hash: ${nuevoHistorial.hash.slice(0, 16)}...`);
     formVerificar.reset();
   });
 }
+//-------- prueba 1 -------
+// block.js  (colócalo después de bootstrap.bundle.min.js, con defer)
+document.addEventListener("DOMContentLoaded", () => {
+  const MODAL_URL = "/blockchain/views/modalDatos.html"; // partial del modal
+  const MODAL_ID  = "datosModal";
+
+  const form      = document.getElementById("form-tracking");
+  const guideCode = document.getElementById("guide-code");
+  const slot      = document.getElementById("modal-slot"); // opcional
+
+  // si no estamos en index.html no hacemos nada
+  if (!form) return;
+
+  // Carga el modal si hace falta y devuelve el elemento
+  async function ensureModalLoaded() {
+    let el = document.getElementById(MODAL_ID);
+    if (el) return el;
+
+    const res = await fetch(MODAL_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+    const html = (await res.text()).trim();
+    (slot || document.body).insertAdjacentHTML("beforeend", html);
+
+    el = document.getElementById(MODAL_ID);
+    if (!el) throw new Error(`No se encontró #${MODAL_ID} en el HTML cargado`);
+    return el;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const hash = guideCode.value
+    if (!hash) { alert("Ingresa el hash a rastrear."); return; }
+
+    // 1) Asegura modal en el DOM y obtén su nodo
+    let modalEl;
+    try { modalEl = await ensureModalLoaded(); }
+    catch (err) { console.error(err); alert("No se pudo cargar el modal."); return; }
+
+    // 2) Busca el bloque por hash
+    const validationHash = naniCoin.chain.find(b => b.hash === hash);
+    if (!validationHash) { alert("❌ No se encontró un envío con ese hash."); return; }
+
+    // 3) Selecciona el form e inputs DENTRO del modal
+    const modalForm = modalEl.querySelector("#modal-form");
+    if (!modalForm) { alert("No existe #modal-form dentro del modal."); return; }
+
+    const inHash   = modalForm.querySelector("#hash");
+    const inEstado = modalForm.querySelector("#estado");
+    const inCiudad = modalForm.querySelector("#ciudad");
+
+    // 4) Toma el último estado del historial de ese envío
+    const historial = Array.isArray(validationHash.data?.historial) ? validationHash.data.historial : [];
+    const last      = historial.length ? (historial[historial.length - 1].data || {}) : {};
+
+    if (inHash)   inHash.value   = validationHash.hash;
+    if (inEstado) inEstado.value = last.estado ?? "N/A";
+    if (inCiudad) inCiudad.value = last.ciudadActual ?? "N/A";
+
+    // (opcional) título
+    const title = modalEl.querySelector(".modal-title");
+    if (title) title.textContent = `Datos de Envío – ${validationHash.hash.slice(0,10)}…`;
+
+    // 5) Mostrar modal
+    bootstrap.Modal.getOrCreateInstance(modalEl).show();
+  });
+});
